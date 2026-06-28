@@ -1,27 +1,61 @@
-import { useState } from 'react'
+const Header = (props) => {
+    return (
+        <div>
+            <h1>{props.course.name}</h1>
+        </div>
+    )
+}
 
-const Display = props => <div>{props.value}</div>
+const Part = (props) => {
+    return (
+        <div>
+            <p>{props.part} {props.exercise}</p>
+        </div>
+    )
+}
 
-const Button = (props) => (
-    <button onClick={props.onClick}>
-        {props.text}
-    </button>
-)
+const Content = (props) => {
+    return (
+        <div>
+            <Part part={props.parts.parts[0].name} exercise={props.parts.parts[0].exercises} />
+            <Part part={props.parts.parts[1].name} exercise={props.parts.parts[1].exercises} />
+            <Part part={props.parts.parts[2].name} exercise={props.parts.parts[2].exercises} />
+        </div>
+    )
+}
+
+const Total = (props) => {
+    return (
+        <div>
+            <p>Number of exercises {props.parts.parts[0].exercises + props.parts.parts[1].exercises + props.parts.parts[2].exercises}</p>
+        </div>
+    )
+}
 
 const App = () => {
-    const [value, setValue] = useState(10)
-
-    const setToValue = newValue => {
-        console.log('value now', newValue)
-        setValue(newValue)
+    const course = {
+        name: 'Half Stack application development',
+        parts: [
+            {
+                name: 'Fundamentals of React',
+                exercises: 10
+            },
+            {
+                name: 'Using props to pass data',
+                exercises: 7
+            },
+            {
+                name: 'State of a component',
+                exercises: 14
+            }
+        ]
     }
 
     return (
         <div>
-            <Display value={value} />
-            <Button onClick={() => setToValue(1000)} text="thousand" />
-            <Button onClick={() => setToValue(0)} text="reset" />
-            <Button onClick={() => setToValue(value + 1)} text="increment" />
+            <Header course={course} />
+            <Content parts={course} />
+            <Total parts={course} />
         </div>
     )
 }
